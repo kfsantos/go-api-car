@@ -42,7 +42,7 @@ func CarGetById(c *gin.Context) {
 		return
 	}
 	var item models.Car
-	err = database.DB.Find(&item, newId).Error
+	err = database.DB.First(&item, newId).Error
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
