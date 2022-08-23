@@ -24,7 +24,7 @@ func CarCreate(c *gin.Context) {
 		return
 	}
 
-	if err := database.DB.Create(&item); err != nil {
+	if err := database.DB.Create(&item).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": "error saving data!"})
 		return
