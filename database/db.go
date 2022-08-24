@@ -13,19 +13,12 @@ import (
 var DB *gorm.DB
 
 func Connection() {
-	db, err := gorm.Open(
-		os.Getenv("DB_CONNECTION"),
-		"host="+os.Getenv("DB_HOST")+
-			" port="+os.Getenv("DB_PORT")+
-			" user="+os.Getenv("DB_USERNAME")+
-			" dbname="+os.Getenv("DB_DATABASE")+
-			" sslmode=disable password="+os.Getenv("DB_PASSWORD"))
+	conn := "host=localhost user=" + os.Getenv("DB_USERNAME") + " password=" + os.Getenv("DB_PASSWORD") + " dbname=" + os.Getenv("DB_DATABASE") + " port=5432 sslmode=disable"
+	DB, err = gorm.Open(postgres.Open(conn))
+
 	if err != nil {
-		log.Fatal(err)
+		log.Panic("Database connection error")
 	}
-	//Para visualizar consultas SQL
-	db.LogMode(true)
-	//cria a tabela chamada books
-	db.AutoMigrate([]models.Car{})
-	DB = db
+
+	DB.AutoMigrate(&models.Car{})	
 }
